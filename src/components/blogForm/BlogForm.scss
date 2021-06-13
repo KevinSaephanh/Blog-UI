@@ -1,0 +1,60 @@
+.blog-form {
+  width: 80%;
+  max-width: 800px;
+  margin: 0 auto;
+
+  label {
+    font-weight: bold;
+  }
+}
+
+.form-group {
+  margin: 25px 0;
+}
+
+.row-group {
+  margin: 15px 0;
+
+  label {
+    width: 15%;
+    text-align: left;
+    font-size: 18px;
+  }
+
+  input {
+    width: 70%;
+    max-width: 500px;
+  }
+}
+
+.categories {
+  display: flex;
+
+  .category-button {
+    height: 40px;
+    width: 140px;
+    margin-right: 8px;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.603);
+    border: 3px solid rgb(136, 240, 136);
+    border-radius: 5%;
+
+    &:hover {
+      border-color: rgb(36, 204, 13);
+      color: rgba(0, 0, 0, 0.801);
+      transition: 0.1s ease-in;
+    }
+
+    &.active {
+      color: rgba(0, 0, 0, 0.795);
+      background: rgba(11, 175, 93, 0.897);
+      border-color: rgba(49, 49, 49, 0.856);
+    }
+  }
+}
+
+.button-group {
+  button {
+    margin: 0 5px;
+  }
+}

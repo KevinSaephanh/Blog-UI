@@ -1,0 +1,15 @@
+.section-form {
+  margin: 25px 0;
+
+  i {
+    margin: 5px 0;
+    font-size: 18px;
+    padding: 10px 0;
+    cursor: pointer;
+    opacity: 0.6;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
