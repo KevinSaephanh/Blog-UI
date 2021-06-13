@@ -1,6 +1,6 @@
 import ISection from "./ISection";
 
-export default interface IBlog {
+export default interface IPost {
   title: string;
   categories: string[];
   user: string;

@@ -1,8 +1,8 @@
 import { FC, FormEvent, useState } from "react";
 import { Form, Button, Row } from "react-bootstrap";
-import BlogSection from "../blogSection/BlogSection";
+import PostSection from "../postSection/PostSection";
 import ISection from "../../shared/models/ISection";
-import "./BlogForm.scss";
+import "./PostForm.scss";
 
 const myCategories = ["Reviews", "Software Dev", "Philosophy", "Misc."];
 const username = "Kevin Saephanh";
@@ -10,7 +10,7 @@ const picture =
   "https://res.cloudinary.com/geekysrm/image/upload/v1542221619/default-user.png";
 const dateCreated = "December 1, 2021";
 
-const BlogForm: FC = () => {
+const PostForm: FC = () => {
   const [categories, setCategories] = useState<string[]>([]);
   const [thumbnail, setThumbnail] = useState<File>();
   const [sections, setSections] = useState<ISection[]>([]);
@@ -87,7 +87,7 @@ const BlogForm: FC = () => {
       </Button>
       {sections.length > 0
         ? sections.map((section, key) => {
-            return <BlogSection section={section} keyId={key} />;
+            return <PostSection section={section} keyId={key} />;
           })
         : null}
 
@@ -101,4 +101,4 @@ const BlogForm: FC = () => {
   );
 };
 
-export default BlogForm;
+export default PostForm;

@@ -1,14 +1,14 @@
 import { FC, useState } from "react";
 import { Form, Button, Row } from "react-bootstrap";
 import ISection from "../../shared/models/ISection";
-import "./BlogSection.scss";
+import "./PostSection.scss";
 
-interface BlogSectionProps {
+interface PostSectionProps {
   section: ISection;
   keyId: number;
 }
 
-const BlogSection: FC<BlogSectionProps> = (props) => {
+const PostSection: FC<PostSectionProps> = (props) => {
   const [section, setSection] = useState<ISection>(props.section);
 
   return (
@@ -36,4 +36,4 @@ const BlogSection: FC<BlogSectionProps> = (props) => {
   );
 };
 
-export default BlogSection;
+export default PostSection;

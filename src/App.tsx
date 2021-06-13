@@ -1,13 +1,20 @@
 import React from "react";
-import BlogForm from "./components/blogForm/BlogForm";
+import { Container } from "react-bootstrap";
+import PostForm from "./components/postForm/PostForm";
+import { AuthProvider } from "./store/providers/AuthProvider";
+import { BrowserRouter as Router } from "react-router-dom";
+import Routes from "./routes";
 import "./App.scss";
 
 function App() {
   return (
-    <div className="App">
-      <h1>Make a blog here</h1>
-      <BlogForm />
-    </div>
+    <AuthProvider>
+      <Router>
+        <Container fluid>
+          <Routes />
+        </Container>
+      </Router>
+    </AuthProvider>
   );
 }
 

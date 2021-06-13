@@ -1,8 +1,8 @@
 import { FC } from "react";
 import { Card } from "react-bootstrap";
-import "./BlogPreview.scss";
+import "./PostPreview.scss";
 
-const BlogPreview: FC = () => {
+const PostPreview: FC = () => {
   return (
     <div className="main-content">
       <h3>Awesome Features Await!</h3>
@@ -10,4 +10,4 @@ const BlogPreview: FC = () => {
   );
 };
 
-export default BlogPreview;
+export default PostPreview;
