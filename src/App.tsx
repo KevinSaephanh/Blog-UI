@@ -1,6 +1,4 @@
-import React from "react";
 import { Container } from "react-bootstrap";
-import PostForm from "./components/postForm/PostForm";
 import { AuthProvider } from "./store/providers/AuthProvider";
 import { BrowserRouter as Router } from "react-router-dom";
 import Routes from "./routes";

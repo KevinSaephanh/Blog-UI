@@ -3,14 +3,14 @@ import axios from "axios";
 
 // Custom hook for api calls
 const useAxios = (url: string) => {
-  const [state, setState] = useState({ data: {}, loading: true });
+  const [state, setState] = useState({ data: {} });
 
   useEffect(() => {
-    setState((state) => ({ data: state.data, loading: true }));
+    setState((state) => ({ data: state.data }));
 
     const callApi = async () => {
       const res = await axios.request({ url });
-      setState({ data: res, loading: false });
+      setState({ data: res });
     };
     callApi();
   }, [url, setState]);

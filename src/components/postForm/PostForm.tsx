@@ -1,5 +1,5 @@
 import { FC, FormEvent, useState } from "react";
-import { Form, Button, Row } from "react-bootstrap";
+import { Form, Button, Row, Col } from "react-bootstrap";
 import PostSection from "../postSection/PostSection";
 import ISection from "../../shared/models/ISection";
 import "./PostForm.scss";
@@ -69,17 +69,21 @@ const PostForm: FC = () => {
         <Form.Label column sm="2">
           Title
         </Form.Label>
-        <Form.Control placeholder="Enter title" />
+        <Col sm="10">
+          <Form.Control placeholder="Enter title" />
+        </Col>
       </Form.Group>
       <Form.Group className="row-group categories" as={Row}>
         <Form.Label column sm="2">
           Categories
         </Form.Label>
-        {getCategories()}
+        <Col sm="10">{getCategories()}</Col>
       </Form.Group>
       <Form.Group className="thumbnail-form-group">
         <Form.Label>Upload a thumbnail for your post</Form.Label>
-        <Form.File />
+        <Col sm="10">
+          <Form.File />
+        </Col>
       </Form.Group>
 
       <Button variant="success" onClick={(e) => handleAddSection(e)}>
