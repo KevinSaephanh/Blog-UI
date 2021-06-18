@@ -1,7 +1,7 @@
 import { FC } from "react";
 import PostForm from "../../components/postForm/PostForm";
 
-const PostEdit: FC = () => {
+const PostEditPage: FC = () => {
   return (
     <div>
       <h1>Create/Edit Post</h1>
@@ -10,4 +10,4 @@ const PostEdit: FC = () => {
   );
 };
 
-export default PostEdit;
+export default PostEditPage;

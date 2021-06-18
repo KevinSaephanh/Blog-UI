@@ -1,55 +1,52 @@
 import { createContext, useEffect, useReducer } from "react";
-import * as ACTIONS from "../actions/authActions";
-import { AuthReducer } from "../reducers/authReducer";
-import { authState } from "./../reducers/authReducer";
-import useAxios from "../../shared/hooks/useAxios";
-import { getBaseUrl } from "../../shared/environments/environment";
+import {
+  AuthReducer,
+  IAuthState,
+  initialAuthState,
+} from "../reducers/authReducer";
+import jwtDecode from "jwt-decode";
+import IUser from "../../shared/models/IUser";
+import { AuthActions } from "../actions/auth/authTypes";
+import IToken from "../../shared/models/IToken";
+import { logout } from "../actions/auth/authActions";
 
-export const AuthContext = createContext({
-  authState: authState,
-  handleLogin: (username: string, password: string) => {},
-  handleLogout: () => {},
-  setUser: () => {},
+export const AuthContext = createContext<{
+  state: IAuthState;
+  dispatch: React.Dispatch<any>;
+}>({
+  state: initialAuthState,
+  dispatch: () => null,
 });
 
 export const AuthProvider = ({ children }: any) => {
-  const [state, dispatch] = useReducer(AuthReducer, authState);
-  // const { data, loading } = useAxios("http://localhost:8080");
+  const [state, dispatch] = useReducer(AuthReducer, initialAuthState);
 
   useEffect(() => {
-    const user = localStorage.getItem("user");
-    if (user !== undefined && user !== null) {
-      console.log(user);
-      // Use jwt token and decode here
-      // const user = JSON.parse(localStorage.getItem("user") as string);
-      // console.log(user);
-      // dispatch(ACTIONS.setUser(user));
+    // localStorage.removeItem("token");
+    if (localStorage.hasOwnProperty("token")) {
+      const token = localStorage.getItem("token") as string;
+      const decoded = jwtDecode(token) as IToken;
+      const { userId, username, photo, exp } = decoded;
+
+      // Set condition for expired token --> dispatch logout
+      const currDateTime = new Date().getTime();
+      console.log(exp);
+      console.log(currDateTime);
+      // if (exp <= currDateTime) logout(dispatch);
+
+      console.log(decoded);
+
+      const payload: IUser = {
+        userId,
+        username,
+        photo,
+      };
+      dispatch({ type: AuthActions.SET_USER, payload });
     }
-  }, []);
-
-  const handleLogin = (username: string, password: string): void => {
-    // Call login endpoint and validate status code/response
-    // If success, dispatch login_success
-    // Else dispatch login failure (logout)
-
-    dispatch(ACTIONS.login_success("data"));
-  };
-
-  const handleLogout = (): void => {
-    dispatch(ACTIONS.logout());
-  };
-
-  const setUser = (): void => {};
+  }, [state.auth]);
 
   return (
-    <AuthContext.Provider
-      value={{
-        authState: state,
-        handleLogin: (username, password) => handleLogin(username, password),
-        handleLogout: () => handleLogout(),
-        setUser: () => setUser(),
-      }}
-    >
+    <AuthContext.Provider value={{ state, dispatch }}>
       {children}
     </AuthContext.Provider>
   );

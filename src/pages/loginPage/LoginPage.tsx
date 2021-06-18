@@ -1,14 +1,15 @@
-import { ChangeEvent, FC, useContext, useState } from "react";
+import { ChangeEvent, FC, FormEvent, useContext, useState } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
+import { login } from "../../store/actions/auth/authActions";
 import { AuthContext } from "../../store/providers/AuthProvider";
-import "./Login.scss";
+import "./LoginPage.scss";
 
-const Login: FC = () => {
+const LoginPage: FC = () => {
   const [inputs, setInputs] = useState({
     username: "",
     password: "",
   });
-  const auth = useContext(AuthContext);
+  const { dispatch } = useContext(AuthContext);
 
   const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
     const { name } = e.target;
@@ -17,9 +18,10 @@ const Login: FC = () => {
     setInputs({ ...inputs, [name]: value });
   };
 
-  const login = () => {
+  const handleLogin = (e: FormEvent) => {
+    e.preventDefault();
     const { username, password } = inputs;
-    auth.handleLogin(username, password);
+    login(username, password, dispatch);
   };
 
   return (
@@ -52,7 +54,11 @@ const Login: FC = () => {
             />
           </Col>
         </Form.Group>
-        <Button variant="success" type="submit" onClick={login}>
+        <Button
+          variant="success"
+          type="submit"
+          onClick={(e: FormEvent) => handleLogin(e)}
+        >
           Submit
         </Button>
       </Form>
@@ -60,4 +66,4 @@ const Login: FC = () => {
   );
 };
 
-export default Login;
+export default LoginPage;

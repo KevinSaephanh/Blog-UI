@@ -1,46 +1,34 @@
 import IUser from "./../../shared/models/IUser";
-import { AuthActions } from "../actions/actionTypes";
+import { AuthActions } from "../actions/auth/authTypes";
 
-interface IAuthState {
+export interface IAuthState {
   user: IUser;
-  token: string;
+  isAuth: boolean;
 }
 
 // Initial state for auth
-export const authState = {
+export const initialAuthState: IAuthState = {
   user: {} as IUser,
-  token: "",
-} as IAuthState;
+  isAuth: false,
+};
 
-export const AuthReducer = (state = authState, action: any) => {
+export const AuthReducer = (state: IAuthState, action: any): any => {
   switch (action.type) {
     case AuthActions.LOGIN_SUCCESS:
-      // Store user data in localstorage and token in cookie
-      const { user, token } = action;
-      localStorage.setItem("user", JSON.stringify(user));
-      localStorage.setItem("token", token);
-
+    case AuthActions.SET_USER:
       return {
         ...state,
-        user,
-        token,
+        user: action.payload,
+        isAuth: true,
       };
     case AuthActions.LOGIN_FAILURE:
     case AuthActions.LOGOUT:
-      // Delete credentials from localstorage and token from cookie
-      localStorage.removeItem("user");
-      localStorage.removeItem("token");
+      window.location.href = "/login";
 
       return {
         ...state,
         user: null,
-        token: null,
-      };
-    case AuthActions.SET_USER:
-      return {
-        ...state,
-        user: action.user,
-        token: "",
+        isAuth: false,
       };
     default:
       return state;
