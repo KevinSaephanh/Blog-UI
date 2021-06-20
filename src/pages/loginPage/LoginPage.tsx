@@ -1,5 +1,12 @@
-import { ChangeEvent, FC, FormEvent, useContext, useState } from "react";
-import { Form, Button, Row, Col } from "react-bootstrap";
+import {
+  ChangeEvent,
+  FC,
+  FormEvent,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+import { Form, Button } from "react-bootstrap";
 import { login } from "../../store/actions/auth/authActions";
 import { AuthContext } from "../../store/providers/AuthProvider";
 import "./LoginPage.scss";
@@ -9,12 +16,15 @@ const LoginPage: FC = () => {
     username: "",
     password: "",
   });
-  const { dispatch } = useContext(AuthContext);
+  const { state, dispatch } = useContext(AuthContext);
+
+  useEffect(() => {
+    console.log("STATE: " + JSON.stringify(state));
+    if (state.isAuth) window.location.href = "/";
+  }, []);
 
   const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name } = e.target;
-    const { value } = e.target;
-
+    const { name, value } = e.target;
     setInputs({ ...inputs, [name]: value });
   };
 
@@ -28,31 +38,23 @@ const LoginPage: FC = () => {
     <div className="login-page">
       <h1>Login</h1>
       <Form>
-        <Form.Group as={Row}>
-          <Form.Label column sm="2">
-            Username
-          </Form.Label>
-          <Col sm="10">
-            <Form.Control
-              name="username"
-              type="text"
-              placeholder="Enter username"
-              onChange={handleInput}
-            />
-          </Col>
+        <Form.Group>
+          <Form.Label>Username</Form.Label>
+          <Form.Control
+            name="username"
+            type="text"
+            placeholder="Enter username"
+            onChange={handleInput}
+          />
         </Form.Group>
-        <Form.Group as={Row}>
-          <Form.Label column sm="2">
-            Password
-          </Form.Label>
-          <Col sm="10">
-            <Form.Control
-              name="password"
-              type="password"
-              placeholder="Password"
-              onChange={handleInput}
-            />
-          </Col>
+        <Form.Group>
+          <Form.Label>Password</Form.Label>
+          <Form.Control
+            name="password"
+            type="password"
+            placeholder="Password"
+            onChange={handleInput}
+          />
         </Form.Group>
         <Button
           variant="success"

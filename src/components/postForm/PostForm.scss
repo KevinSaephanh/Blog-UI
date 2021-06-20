@@ -2,14 +2,6 @@
   width: 80%;
   max-width: 800px;
   margin: 0 auto;
-
-  label {
-    font-weight: bold;
-  }
-}
-
-.form-group {
-  margin: 25px 0;
 }
 
 .row-group {
@@ -22,7 +14,7 @@
   }
 
   input {
-    width: 70%;
+    width: 80%;
     max-width: 500px;
   }
 }
@@ -33,7 +25,8 @@
   .category-button {
     height: 40px;
     width: 140px;
-    margin-right: 8px;
+    margin: 7px 0;
+    margin-right: 10px;
     font-weight: bold;
     color: rgba(0, 0, 0, 0.603);
     border: 3px solid rgb(136, 240, 136);
@@ -50,11 +43,5 @@
       background: rgba(11, 175, 93, 0.897);
       border-color: rgba(49, 49, 49, 0.856);
     }
-  }
-}
-
-.button-group {
-  button {
-    margin: 0 5px;
   }
 }

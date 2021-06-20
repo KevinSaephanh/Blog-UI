@@ -3,6 +3,7 @@ import jwtDecode from "jwt-decode";
 import { Dispatch } from "react";
 import { getBaseUrl } from "../../../shared/environments/environment";
 import IUser from "../../../shared/models/IUser";
+import setAuthToken from "../../../utils/setAuthToken";
 import { AuthActions } from "./authTypes";
 
 const BASE_URL = getBaseUrl() + "/auth";
@@ -18,16 +19,17 @@ export const login = async (
       password,
     });
 
-    // Get token from response and set in local storage
+    // Get token from response and set in local storage and header
     const { token } = data;
     localStorage.setItem("token", token);
+    setAuthToken(token);
 
     // Decode token and dispatch login success with contents
     const decoded = jwtDecode(token);
     console.log(decoded);
 
     dispatch({ type: AuthActions.LOGIN_SUCCESS, payload: decoded });
-    // window.location.href = "/";
+    window.location.href = "/";
   } catch (error) {
     dispatch({ type: AuthActions.LOGIN_FAILURE });
   }
@@ -35,9 +37,7 @@ export const login = async (
 
 export const logout = (dispatch: Dispatch<any>) => {
   localStorage.removeItem("token");
+  setAuthToken(null);
+  window.location.href = "/login";
   dispatch({ type: AuthActions.LOGOUT });
-};
-
-export const setUser = (user: IUser, dispatch: Dispatch<any>) => {
-  dispatch({ type: AuthActions.SET_USER, payload: user });
 };

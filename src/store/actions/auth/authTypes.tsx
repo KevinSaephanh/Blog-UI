@@ -9,7 +9,7 @@ export enum AuthActions {
 
 export interface ILoginSuccess {
   readonly type: AuthActions.LOGIN_SUCCESS;
-  payload: {};
+  payload: IUser;
 }
 
 export interface ILoginFailure {
@@ -22,7 +22,7 @@ export interface ILogout {
 
 export interface ISetUser {
   readonly type: AuthActions.SET_USER;
-  payload: {};
+  payload: IUser;
 }
 
 export type AuthAction = ILoginSuccess | ILoginFailure | ILogout | ISetUser;

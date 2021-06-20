@@ -1,4 +1,42 @@
 body {
-  text-align: center;
   padding: 10px;
+}
+
+h1,
+h2 {
+  text-align: center;
+}
+
+label {
+  font-weight: bold;
+}
+
+.image-form-group {
+  display: flex;
+
+  img {
+    height: 200px;
+    width: 200px;
+    margin-top: 15px;
+  }
+}
+
+.form-group {
+  margin: 25px 0;
+}
+
+.button-group {
+  button {
+    margin: 15px 0;
+
+    &:first-child {
+      margin-right: 10px;
+    }
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .image-form-group {
+    display: block;
+  }
 }

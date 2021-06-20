@@ -1,4 +1,4 @@
-import { createContext, useEffect, useReducer } from "react";
+import { createContext, Dispatch, useEffect, useReducer } from "react";
 import {
   AuthReducer,
   IAuthState,
@@ -9,10 +9,11 @@ import IUser from "../../shared/models/IUser";
 import { AuthActions } from "../actions/auth/authTypes";
 import IToken from "../../shared/models/IToken";
 import { logout } from "../actions/auth/authActions";
+import setAuthToken from "../../utils/setAuthToken";
 
 export const AuthContext = createContext<{
   state: IAuthState;
-  dispatch: React.Dispatch<any>;
+  dispatch: Dispatch<any>;
 }>({
   state: initialAuthState,
   dispatch: () => null,
@@ -23,24 +24,28 @@ export const AuthProvider = ({ children }: any) => {
 
   useEffect(() => {
     // localStorage.removeItem("token");
+    // Set auth state if token is in local storage
     if (localStorage.hasOwnProperty("token")) {
-      const token = localStorage.getItem("token") as string;
-      const decoded = jwtDecode(token) as IToken;
-      const { userId, username, photo, exp } = decoded;
+      const token = JSON.parse(localStorage.getItem("token") as string);
+      // setAuthToken(token);
+      console.log("TOKEN: " + JSON.stringify(token));
 
-      // Set condition for expired token --> dispatch logout
-      const currDateTime = new Date().getTime();
-      console.log(exp);
-      console.log(currDateTime);
+      // Decode token
+      // const decoded = jwtDecode(token) as IToken;
+      // const { userId, username, photo, exp } = decoded;
+
+      // If token is expired, logout user
+      // const currDateTime = Date.now() / 1000;
       // if (exp <= currDateTime) logout(dispatch);
 
-      console.log(decoded);
+      // console.log(decoded);
 
-      const payload: IUser = {
-        userId,
-        username,
-        photo,
-      };
+      // const payload: IUser = {
+      //   userId,
+      //   username,
+      //   photo,
+      // };
+      const payload: IUser = token;
       dispatch({ type: AuthActions.SET_USER, payload });
     }
   }, [state.auth]);
