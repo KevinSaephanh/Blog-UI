@@ -8,6 +8,7 @@
 
   i {
     margin: 5px 0;
+    margin-right: 30px;
     font-size: 18px;
     padding: 10px 0;
     cursor: pointer;
@@ -15,6 +16,16 @@
 
     &:hover {
       opacity: 1;
+    }
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .trash-icon-wrapper {
+    i {
+      margin-right: 0;
+      margin-bottom: 0;
+      padding-bottom: 0;
     }
   }
 }

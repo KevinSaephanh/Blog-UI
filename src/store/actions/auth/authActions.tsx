@@ -26,7 +26,6 @@ export const login = async (
 
     // Decode token and dispatch login success with contents
     const decoded = jwtDecode(token);
-    console.log(decoded);
 
     dispatch({ type: AuthActions.LOGIN_SUCCESS, payload: decoded });
     window.location.href = "/";
@@ -36,7 +35,7 @@ export const login = async (
 };
 
 export const logout = (dispatch: Dispatch<any>) => {
-  localStorage.removeItem("token");
+  localStorage.clear();
   setAuthToken(null);
   window.location.href = "/login";
   dispatch({ type: AuthActions.LOGOUT });

@@ -1,5 +1,5 @@
 export default interface ISection {
-  title: string;
-  picture: File | string;
+  title?: string;
+  picture?: File | string;
   body: string;
 }

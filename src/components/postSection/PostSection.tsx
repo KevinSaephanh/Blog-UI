@@ -1,5 +1,5 @@
 import { ChangeEvent, FC, useEffect, useState } from "react";
-import { Form, Row } from "react-bootstrap";
+import { Form, Row, Col } from "react-bootstrap";
 import ISection from "../../shared/models/ISection";
 import "./PostSection.scss";
 
@@ -44,6 +44,11 @@ const PostSection: FC<PostSectionProps> = (props) => {
     setInputs({ ...inputs, [name]: value });
   };
 
+  const handleFileInput = (e: any) => {
+    const file = e.target.files[0];
+    setInputs({ ...inputs, picture: file });
+  };
+
   return (
     <Form
       id={`section-${props.keyId}`}
@@ -58,17 +63,21 @@ const PostSection: FC<PostSectionProps> = (props) => {
         <Form.Label column sm="2">
           Title
         </Form.Label>
-        <Form.Control
-          name="title"
-          value={title}
-          placeholder="Enter title"
-          onChange={handleInput}
-        />
+        <Col sm="10">
+          <Form.Control
+            name="title"
+            value={title}
+            placeholder="Enter title"
+            onChange={handleInput}
+          />
+        </Col>
       </Form.Group>
 
       <Form.Group className="image-form-group">
-        <Form.Label>Upload a picture for this section</Form.Label>
-        <Form.File name="picture" />
+        <div>
+          <Form.Label>Upload a picture for this section</Form.Label>
+          <Form.File name="picture" onChange={handleFileInput} />
+        </div>
         {picture ? (
           <img
             src={
@@ -79,14 +88,18 @@ const PostSection: FC<PostSectionProps> = (props) => {
       </Form.Group>
 
       <Form.Group>
-        <Form.Label>Section Body</Form.Label>
-        <Form.Control
-          name="body"
-          value={body}
-          as="textarea"
-          rows={3}
-          onChange={handleInput}
-        />
+        <Form.Label column sm="2">
+          Section Body
+        </Form.Label>
+        <Col sm="10">
+          <Form.Control
+            name="body"
+            value={body}
+            as="textarea"
+            rows={3}
+            onChange={handleInput}
+          />
+        </Col>
         {/* Use text editor here instead? */}
       </Form.Group>
     </Form>

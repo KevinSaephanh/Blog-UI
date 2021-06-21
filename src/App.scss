@@ -1,5 +1,5 @@
-body {
-  padding: 10px;
+.container-fluid {
+  padding: 0 !important;
 }
 
 h1,
@@ -14,15 +14,34 @@ label {
 .image-form-group {
   display: flex;
 
+  label {
+    margin-bottom: 20px;
+  }
+
   img {
-    height: 200px;
-    width: 200px;
+    height: 220px;
+    width: 240px;
     margin-top: 15px;
   }
 }
 
 .form-group {
   margin: 25px 0;
+}
+
+.row-group {
+  margin: 15px 0;
+
+  label {
+    width: 15%;
+    text-align: left;
+    font-size: 18px;
+  }
+
+  input {
+    width: 80%;
+    max-width: 500px;
+  }
 }
 
 .button-group {
@@ -36,7 +55,18 @@ label {
 }
 
 @media only screen and (max-width: 800px) {
+  .row-group {
+    input {
+      width: 100%;
+    }
+  }
+
   .image-form-group {
     display: block;
+
+    img {
+      height: 180px;
+      width: 210px;
+    }
   }
 }

@@ -17,9 +17,9 @@ interface PostFormProps {
 
 const PostForm: FC<PostFormProps> = (props) => {
   const [title, setTitle] = useState<string>("");
-  const [categories, setCategories] = useState<string[]>([] as string[]);
+  const [categories, setCategories] = useState<string[]>([]);
   const [thumbnail, setThumbnail] = useState<File | string>();
-  const [sections, setSections] = useState<ISection[]>([] as ISection[]);
+  const [sections, setSections] = useState<ISection[]>([]);
 
   useEffect(() => {
     const { post } = props;
@@ -60,6 +60,8 @@ const PostForm: FC<PostFormProps> = (props) => {
     } else {
       setCategories((categories) => [...categories, category]);
     }
+
+    console.log(categories);
 
     const categoryButton = document.getElementById(`${category}-button`);
     categoryButton?.classList.toggle("active");
@@ -121,10 +123,10 @@ const PostForm: FC<PostFormProps> = (props) => {
         <Col sm="10">{getCategories()}</Col>
       </Form.Group>
       <Form.Group className="image-form-group">
-        <Form.Label>Upload a thumbnail for your post</Form.Label>
-        <Col sm="10">
+        <div>
+          <Form.Label>Upload a thumbnail for your post</Form.Label>
           <Form.File onChange={handleFileInput} />
-        </Col>
+        </div>
         {thumbnail ? (
           <img
             src={

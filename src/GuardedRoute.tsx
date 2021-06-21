@@ -1,10 +1,10 @@
-import { Component } from "react";
+import { Component, createElement } from "react";
 import { Route, Redirect } from "react-router-dom";
 
-const GuardedRoute = ({ component, ...rest }: any) => {
+const GuardedRoute = ({ component: Component, ...rest }: any) => {
   const routeComponent = (props: any) =>
     localStorage.hasOwnProperty("token") ? (
-      <Component {...rest} {...props} />
+      <Component {...props} />
     ) : (
       <Redirect to="/login" />
     );

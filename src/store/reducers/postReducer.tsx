@@ -3,10 +3,12 @@ import { PostActions } from "../actions/post/postTypes";
 
 export interface IPostState {
   posts: IPost[];
+  currentPost: IPost | null;
 }
 
 export const initialPostState: IPostState = {
   posts: [] as IPost[],
+  currentPost: null,
 };
 
 export const PostReducer = (state: IPostState, action: any): any => {
