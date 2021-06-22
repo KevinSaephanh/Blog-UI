@@ -31,6 +31,7 @@ const PostView: FC<PostViewProps> = (props) => {
     userProfilePic,
     dateCreated,
     thumbnail,
+    thumbnailCredit,
     sections,
   } = props.post;
   const formattedDate = `${
@@ -40,35 +41,46 @@ const PostView: FC<PostViewProps> = (props) => {
   console.log(props.post);
 
   return (
-    <div className="main-content">
+    <div className="post-view">
       <h1>{title}</h1>
       <div className="post-metadata-wrapper">
         <img src={userProfilePic} />
-        <p>{user}</p>
+        <p>
+          <strong>{user}</strong>
+        </p>
         <p>{formattedDate}</p>
       </div>
-      <ul>
+      <ul className="post-category-list">
         {categories.map((category, key) => (
           <li key={key}>{category}</li>
         ))}
       </ul>
-      <img className="post-thumbnail" src={thumbnail} />
+      <div className="post-image-container">
+        <img className="post-thumbnail" src={thumbnail} />
+        {thumbnailCredit ? <span>{thumbnailCredit}</span> : null}
+      </div>
+
       <div className="sections-wrapper">
         {sections.map((section, key) => {
-          const { title, picture, body } = section;
+          const { title, picture, pictureCredit, body } = section;
           return (
             <div key={key}>
-              {title !== "" ? <h3>{title}</h3> : null}
-              {picture !== null ? (
-                <img
-                  src={
-                    picture instanceof File
-                      ? URL.createObjectURL(picture)
-                      : picture
+              {title ? <h3>{title}</h3> : null}
+              {picture ? (
+                <div className="post-image-container">
+                  {
+                    <img
+                      src={
+                        picture instanceof File
+                          ? URL.createObjectURL(picture)
+                          : picture
+                      }
+                    />
                   }
-                />
+                  {pictureCredit ? <span>{pictureCredit}</span> : null}
+                </div>
               ) : null}
-              <p>{body}</p>
+              <p className="body">{body}</p>
             </div>
           );
         })}

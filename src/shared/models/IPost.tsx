@@ -8,5 +8,6 @@ export default interface IPost {
   userProfilePic: string;
   dateCreated: Date;
   thumbnail: string;
+  thumbnailCredit?: string;
   sections: ISection[];
 }
