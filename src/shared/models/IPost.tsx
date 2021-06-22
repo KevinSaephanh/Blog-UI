@@ -1,3 +1,4 @@
+import IPicture from "./IPicture";
 import ISection from "./ISection";
 
 export default interface IPost {
@@ -7,7 +8,6 @@ export default interface IPost {
   user: string;
   userProfilePic: string;
   dateCreated: Date;
-  thumbnail: string;
-  thumbnailCredit?: string;
+  thumbnail: IPicture;
   sections: ISection[];
 }

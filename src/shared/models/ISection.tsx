@@ -1,6 +1,7 @@
+import IPicture from "./IPicture";
+
 export default interface ISection {
   title?: string;
-  picture?: File | string;
-  pictureCredit?: string;
+  picture?: IPicture;
   body: string;
 }

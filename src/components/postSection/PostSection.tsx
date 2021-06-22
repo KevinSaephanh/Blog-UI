@@ -1,5 +1,6 @@
 import { ChangeEvent, FC, useEffect, useState } from "react";
 import { Form, Row, Col } from "react-bootstrap";
+import IPicture from "../../shared/models/IPicture";
 import ISection from "../../shared/models/ISection";
 import "./PostSection.scss";
 
@@ -9,17 +10,17 @@ interface PostSectionProps {
   deleteSection(keyId: string, section: ISection): void;
 }
 
-const mockSection: ISection = {
-  title: "asdfADSs",
-  picture:
-    "https://res.cloudinary.com/geekysrm/image/upload/v1542221619/default-user.png",
-  body: "weqdasda da dwad wq dq qwdwa",
-};
+// const mockSection: ISection = {
+//   title: "asdfADSs",
+//   picture:
+//     "https://res.cloudinary.com/geekysrm/image/upload/v1542221619/default-user.png",
+//   body: "weqdasda da dwad wq dq qwdwa",
+// };
 
 const PostSection: FC<PostSectionProps> = (props) => {
   const [inputs, setInputs] = useState<ISection>({
     title: "",
-    picture: "",
+    picture: {} as IPicture,
     body: "",
   });
   const { title, picture, body } = inputs;
@@ -78,10 +79,12 @@ const PostSection: FC<PostSectionProps> = (props) => {
           <Form.Label>Upload a picture for this section</Form.Label>
           <Form.File name="picture" onChange={handleFileInput} />
         </div>
-        {picture ? (
+        {picture?.pic ? (
           <img
             src={
-              picture instanceof File ? URL.createObjectURL(picture) : picture
+              picture.pic instanceof File
+                ? URL.createObjectURL(picture.pic)
+                : picture.pic
             }
           />
         ) : null}

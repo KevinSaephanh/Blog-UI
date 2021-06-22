@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { Card } from "react-bootstrap";
+import IPicture from "../../shared/models/IPicture";
 import IPost from "../../shared/models/IPost";
 import ISection from "../../shared/models/ISection";
 import "./PostView.scss";
@@ -31,12 +32,31 @@ const PostView: FC<PostViewProps> = (props) => {
     userProfilePic,
     dateCreated,
     thumbnail,
-    thumbnailCredit,
     sections,
   } = props.post;
   const formattedDate = `${
     monthNames[dateCreated.getMonth()]
   } ${dateCreated.getDate()}, ${dateCreated.getFullYear()}`;
+
+  const getPictureCreds = (picture: IPicture) => {
+    const { creator, creatorLink, website, websiteLink } = picture;
+
+    if (creator && website) {
+      return (
+        <span>
+          Credit:{" "}
+          <a href={creatorLink} target="_blank">
+            {creator}
+          </a>
+          &nbsp;from&nbsp;
+          <a href={websiteLink} target="_blank">
+            {website}
+          </a>
+        </span>
+      );
+    }
+    return null;
+  };
 
   console.log(props.post);
 
@@ -56,28 +76,21 @@ const PostView: FC<PostViewProps> = (props) => {
         ))}
       </ul>
       <div className="post-image-container">
-        <img className="post-thumbnail" src={thumbnail} />
-        {thumbnailCredit ? <span>{thumbnailCredit}</span> : null}
+        <img className="post-thumbnail" src={thumbnail.pic as string} />
+        {getPictureCreds(thumbnail)}
       </div>
 
       <div className="sections-wrapper">
         {sections.map((section, key) => {
-          const { title, picture, pictureCredit, body } = section;
+          const { title, picture, body } = section;
+
           return (
             <div key={key}>
               {title ? <h3>{title}</h3> : null}
               {picture ? (
                 <div className="post-image-container">
-                  {
-                    <img
-                      src={
-                        picture instanceof File
-                          ? URL.createObjectURL(picture)
-                          : picture
-                      }
-                    />
-                  }
-                  {pictureCredit ? <span>{pictureCredit}</span> : null}
+                  <img src={picture.pic as string} />
+                  {getPictureCreds(picture)}
                 </div>
               ) : null}
               <p className="body">{body}</p>

@@ -4,6 +4,7 @@ import PostSection from "../postSection/PostSection";
 import ISection from "../../shared/models/ISection";
 import "./PostForm.scss";
 import IPost from "../../shared/models/IPost";
+import IPicture from "../../shared/models/IPicture";
 
 const myCategories = ["Reviews", "Software Dev", "Philosophy", "Misc."];
 const username = "Kevin Saephanh";
@@ -18,7 +19,7 @@ interface PostFormProps {
 const PostForm: FC<PostFormProps> = (props) => {
   const [title, setTitle] = useState<string>("");
   const [categories, setCategories] = useState<string[]>([]);
-  const [thumbnail, setThumbnail] = useState<File | string>();
+  const [thumbnail, setThumbnail] = useState<IPicture>();
   const [sections, setSections] = useState<ISection[]>([]);
 
   useEffect(() => {
@@ -76,7 +77,7 @@ const PostForm: FC<PostFormProps> = (props) => {
     e.preventDefault();
     const section: ISection = {
       title: "",
-      picture: "",
+      picture: {} as IPicture,
       body: "",
     };
     setSections((sections) => [...sections, section]);
@@ -127,12 +128,12 @@ const PostForm: FC<PostFormProps> = (props) => {
           <Form.Label>Upload a thumbnail for your post</Form.Label>
           <Form.File onChange={handleFileInput} />
         </div>
-        {thumbnail ? (
+        {thumbnail?.pic ? (
           <img
             src={
-              thumbnail instanceof File
-                ? URL.createObjectURL(thumbnail)
-                : thumbnail
+              thumbnail.pic instanceof File
+                ? URL.createObjectURL(thumbnail.pic)
+                : thumbnail.pic
             }
           />
         ) : null}
