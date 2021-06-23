@@ -1,5 +1,6 @@
 import { ChangeEvent, FC, useEffect, useState } from "react";
 import { Form, Row, Col } from "react-bootstrap";
+import IParagraph from "../../shared/models/IParagraph";
 import IPicture from "../../shared/models/IPicture";
 import ISection from "../../shared/models/ISection";
 import "./PostSection.scss";
@@ -21,7 +22,7 @@ const PostSection: FC<PostSectionProps> = (props) => {
   const [inputs, setInputs] = useState<ISection>({
     title: "",
     picture: {} as IPicture,
-    body: "",
+    body: [] as IParagraph[],
   });
   const { title, picture, body } = inputs;
 
@@ -97,7 +98,7 @@ const PostSection: FC<PostSectionProps> = (props) => {
         <Col sm="10">
           <Form.Control
             name="body"
-            value={body}
+            // value={body}
             as="textarea"
             rows={3}
             onChange={handleInput}

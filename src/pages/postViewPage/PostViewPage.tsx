@@ -7,7 +7,23 @@ import ISection from "../../shared/models/ISection";
 
 const mockSections: ISection[] = [
   {
-    body: "Aliquam fermentum risus eu purus bibendum lobortis. In ac orci nulla. Aenean nec elit eget diam porttitor eleifend non ut nisl. Suspendisse potenti. Donec eget purus sollicitudin, molestie urna sed, dictum eros. Praesent ac nisl eget urna imperdiet fringilla. Nullam rutrum viverra lorem et rhoncus. Sed in ex volutpat, semper nisl et, varius risus.",
+    body: [
+      {
+        content:
+          "Suspendisse potenti. Donec eget purus sollicitudin, molestie urna sed, dictum eros. Praesent ac nisl eget urna imperdiet fringilla. Nullam rutrum viverra lorem et rhoncus. Sed in ex volutpat, semper nisl et, varius risus.",
+        isList: false,
+      },
+      {
+        content:
+          "Sed sollicitudin et enim in suscipit. Aliquam fermentum risus eu purus bibendum lobortis. In ac orci nulla. Suspendisse potenti arc ni. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.",
+        isList: false,
+      },
+      {
+        content:
+          "Aliquam fermentum risus eu purus bibendum lobortis. In ac orci nulla. Aenean nec elit eget diam porttitor eleifend non ut nisl. Suspendisse potenti. Donec eget purus sollicitudin, molestie urna sed, dictum eros. Praesent ac nisl eget urna imperdiet fringilla. Nullam rutrum viverra lorem et rhoncus. Sed in ex volutpat, semper nisl et, varius risus.",
+        isList: false,
+      },
+    ],
   },
   {
     title: "Booga Ooga",
@@ -18,7 +34,30 @@ const mockSections: ISection[] = [
       website: "Kevco",
       websiteLink: "https://www.youtube.com",
     } as IPicture,
-    body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec at mollis ligula, vitae mattis leo. Curabitur congue cursus libero quis congue. Donec non purus id odio mattis ornare. Pellentesque gravida sollicitudin leo eu laoreet. Duis et lobortis magna, vel tincidunt magna. Vestibulum lacinia felis in dui condimentum, ut ultricies orci porta. Integer condimentum lectus et tortor efficitur, quis posuere sapien imperdiet. Donec mollis tortor in commodo laoreet. Duis feugiat aliquam vestibulum. Aliquam sollicitudin tortor lorem, sed sodales lacus aliquam non. Donec sit amet libero libero. Quisque eu convallis erat, in scelerisque leo. Donec facilisis, arcu a molestie tincidunt, orci metus pretium mauris, nec ultrices nisl arcu eu dolor. Morbi scelerisque est in lacus eleifend ornare.",
+    body: [
+      {
+        content:
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec at mollis ligula, vitae mattis leo. Curabitur congue cursus libero quis congue. Donec non purus id odio mattis ornare. Pellentesque gravida sollicitudin leo eu laoreet. Duis et lobortis magna, vel tincidunt magna. Vestibulum lacinia felis in dui condimentum, ut ultricies orci porta. Integer condimentum lectus et tortor efficitur, quis posuere sapien imperdiet. Donec mollis tortor in commodo laoreet. Duis feugiat aliquam vestibulum. Aliquam sollicitudin tortor lorem, sed sodales lacus aliquam non. Donec sit amet libero libero. Quisque eu convallis erat, in scelerisque leo. Donec facilisis, arcu a molestie tincidunt, orci metus pretium mauris, nec ultrices nisl arcu eu dolor. Morbi scelerisque est in lacus eleifend ornare.",
+        isList: false,
+      },
+      {
+        content: "Morbi scelerisque est in lacus eleifend ornare:",
+        isList: false,
+      },
+      {
+        content: [
+          "Lorem ipsum sit amet",
+          "dolor elit amet",
+          "Morbi scelerisque est in lacus",
+        ],
+        isList: true,
+      },
+      {
+        content:
+          "Nunc cursus dapibus nulla sed ultricies. Sed sollicitudin et enim in suscipit. Quisque pulvinar pulvinar augue, vel viverra massa semper eu. Praesent eget nulla eget neque vehicula varius. Aliquam fermentum risus eu purus bibendum lobortis. In ac orci nulla. Aenean nec elit eget diam porttitor eleifend non ut nisl. Suspendisse potenti. Donec eget purus sollicitudin, molestie urna sed, dictum eros. Praesent ac nisl eget urna imperdiet fringilla. Nullam rutrum viverra lorem et rhoncus. Sed in ex volutpat, semper nisl et, varius risus. Cras gravida dictum tortor a dictum. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.",
+        isList: false,
+      },
+    ],
   },
   {
     title: "Ooga Booga Mooga",
@@ -29,7 +68,18 @@ const mockSections: ISection[] = [
       website: "Kevco",
       websiteLink: "https://www.youtube.com",
     } as IPicture,
-    body: "Nunc cursus dapibus nulla sed ultricies. Sed sollicitudin et enim in suscipit. Quisque pulvinar pulvinar augue, vel viverra massa semper eu. Praesent eget nulla eget neque vehicula varius. Aliquam fermentum risus eu purus bibendum lobortis. In ac orci nulla. Aenean nec elit eget diam porttitor eleifend non ut nisl. Suspendisse potenti. Donec eget purus sollicitudin, molestie urna sed, dictum eros. Praesent ac nisl eget urna imperdiet fringilla. Nullam rutrum viverra lorem et rhoncus. Sed in ex volutpat, semper nisl et, varius risus. Cras gravida dictum tortor a dictum. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.",
+    body: [
+      {
+        content:
+          "Vestibulum lacinia felis in dui condimentum, ut ultricies orci porta. Integer condimentum lectus et tortor efficitur, quis posuere sapien imperdiet. Donec mollis tortor in commodo laoreet. Duis feugiat aliquam vestibulum. Aliquam sollicitudin tortor lorem, sed sodales lacus aliquam non. Donec sit amet libero libero. Quisque eu convallis erat, in scelerisque leo. Donec facilisis, arcu a molestie tincidunt, orci metus pretium mauris, nec ultrices nisl arcu eu dolor. Morbi scelerisque est in lacus eleifend ornare.",
+        isList: false,
+      },
+      {
+        content:
+          "Aliquam sollicitudin tortor lorem, sed sodales lacus aliquam non. Donec sit amet libero libero. Quisque eu convallis erat, in scelerisque leo. Donec facilisis, arcu a molestie tincidunt, orci metus pretium mauris, nec ultrices nisl arcu eu dolor. Morbi scelerisque est in lacus eleifend ornare.",
+        isList: false,
+      },
+    ],
   },
 ];
 

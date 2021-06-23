@@ -78,7 +78,7 @@ const PostForm: FC<PostFormProps> = (props) => {
     const section: ISection = {
       title: "",
       picture: {} as IPicture,
-      body: "",
+      body: [],
     };
     setSections((sections) => [...sections, section]);
     console.log(sections.length);

@@ -23,6 +23,15 @@ $hover-color: rgb(86, 206, 86);
   h3 {
     font-family: "Roboto", sans-serif;
   }
+
+  a {
+    text-decoration: none !important;
+    color: rgb(101, 128, 114) !important;
+
+    &:hover {
+      color: rgba(64, 224, 131, 0.788) !important;
+    }
+  }
 }
 
 .post-metadata-wrapper {
@@ -49,7 +58,7 @@ $hover-color: rgb(86, 206, 86);
 
 .post-category-list {
   margin-top: 15px;
-  margin-bottom: 30px;
+  margin-bottom: 25px;
   list-style-type: none;
   display: flex;
   padding-left: 0;
@@ -89,9 +98,19 @@ $hover-color: rgb(86, 206, 86);
   }
 }
 
-.body {
+.body-wrapper {
   margin: 0 auto;
-  margin-bottom: 50px;
+  margin-bottom: 40px;
+  font-family: "Merriweather", serif;
+  letter-spacing: 0.3px;
+
+  ul {
+    margin: 35px 0;
+
+    li {
+      margin: 20px 0;
+    }
+  }
 }
 
 @media only screen and (max-width: 800px) {
@@ -109,7 +128,7 @@ $hover-color: rgb(86, 206, 86);
   }
 
   .post-category-list {
-    margin-bottom: 25px;
+    margin-bottom: 20px;
 
     li {
       width: 80px;
@@ -127,6 +146,16 @@ $hover-color: rgb(86, 206, 86);
 
     span {
       font-size: 13px;
+    }
+  }
+
+  .body-wrapper {
+    ul {
+      margin: 25px 0;
+
+      li {
+        margin: 15px 0;
+      }
     }
   }
 }
