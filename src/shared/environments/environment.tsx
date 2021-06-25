@@ -1,4 +1,4 @@
-export const LOCAL_BASE_URL = "http://localhost:8080";
+export const LOCAL_BASE_URL = "http://localhost:8080/api";
 export const PROD_BASE_URL = "https://";
 
 export const getBaseUrl = () => {

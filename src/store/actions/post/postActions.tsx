@@ -4,7 +4,7 @@ import { getBaseUrl } from "../../../shared/environments/environment";
 import IPost from "../../../shared/models/IPost";
 import { PostActions } from "./postTypes";
 
-const BASE_URL = getBaseUrl + "/posts";
+const BASE_URL = getBaseUrl() + "/posts";
 
 export const addPost = async (post: IPost, dispatch: Dispatch<any>) => {
   try {

@@ -1,8 +1,7 @@
-$success-color: rgb(79, 177, 79);
-$hover-color: rgb(86, 206, 86);
+@use "../../master" as global;
 
 .post-view {
-  padding: 25px 10px;
+  padding: 25px 15px;
   margin-top: 25px;
   font-family: Arial, Helvetica, sans-serif;
   width: 80%;
@@ -42,7 +41,7 @@ $hover-color: rgb(86, 206, 86);
     height: 30px;
     width: 30px;
     border-radius: 50%;
-    border: 1.5px solid $success-color;
+    border: 1.5px solid global.$success-color;
   }
 
   p {
@@ -52,7 +51,7 @@ $hover-color: rgb(86, 206, 86);
   }
 
   strong {
-    color: $success-color;
+    color: global.$success-color;
   }
 }
 
@@ -67,25 +66,27 @@ $hover-color: rgb(86, 206, 86);
     margin-right: 10px;
     width: 100px;
     text-align: center;
-    color: $success-color;
-    border: 2px solid $success-color;
+    color: global.$success-color;
+    border: 2px solid global.$success-color;
     border-radius: 5px;
 
     &:hover {
-      color: $hover-color;
-      border: 2px solid $hover-color;
+      color: global.$hover-color;
+      border: 2px solid global.$hover-color;
     }
   }
 }
 
 .post-image-container {
-  height: 400px;
+  height: 70%;
+  max-height: 600px;
   width: 100%;
   margin: 10px auto;
-  margin-bottom: 25px;
+  margin-bottom: 50px;
 
   img {
     height: 90%;
+    max-height: 600px;
     width: 100%;
     display: block;
     margin: 20px auto;
@@ -113,7 +114,7 @@ $hover-color: rgb(86, 206, 86);
   }
 }
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 1000px) {
   .post-view {
     width: 100%;
     padding: 10px;
@@ -127,6 +128,10 @@ $hover-color: rgb(86, 206, 86);
     }
   }
 
+  .post-metadata-wrapper {
+    width: 100%;
+  }
+
   .post-category-list {
     margin-bottom: 20px;
 
@@ -137,8 +142,8 @@ $hover-color: rgb(86, 206, 86);
   }
 
   .post-image-container {
-    height: 300px;
-    margin-bottom: 20px;
+    height: 80%;
+    margin-bottom: 30px;
 
     img {
       margin-bottom: 10px;

@@ -1,22 +1,8 @@
 import { FC } from "react";
 import IPicture from "../../shared/models/IPicture";
 import IPost from "../../shared/models/IPost";
+import { getFormattedDate } from "../../utils/utils";
 import "./PostView.scss";
-
-const monthNames = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
 
 interface PostViewProps {
   post: IPost;
@@ -32,9 +18,6 @@ const PostView: FC<PostViewProps> = (props) => {
     thumbnail,
     sections,
   } = props.post;
-  const formattedDate = `${
-    monthNames[dateCreated.getMonth()]
-  } ${dateCreated.getDate()}, ${dateCreated.getFullYear()}`;
 
   const getPictureCreds = (picture: IPicture) => {
     const { creator, creatorLink, website, websiteLink } = picture;
@@ -67,7 +50,7 @@ const PostView: FC<PostViewProps> = (props) => {
         <p>
           <strong>{user}</strong>
         </p>
-        <p>{formattedDate}</p>
+        <p>{getFormattedDate(dateCreated)}</p>
       </div>
 
       {/* Post categories */}
