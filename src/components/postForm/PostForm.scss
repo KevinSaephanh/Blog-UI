@@ -1,7 +1,21 @@
 .blog-form {
   width: 80%;
-  max-width: 800px;
+  max-width: 850px;
   margin: 0 auto;
+}
+
+.editor-class {
+  img {
+    height: 300px !important;
+    width: 80% !important;
+  }
+}
+
+.blog-post {
+  img {
+    height: 300px !important;
+    width: 100% !important;
+  }
 }
 
 .categories {
@@ -28,5 +42,21 @@
       background: rgba(11, 175, 93, 0.897);
       border-color: rgba(49, 49, 49, 0.856);
     }
+  }
+}
+
+.image-form-group {
+  .image-wrapper {
+    display: flex;
+  }
+
+  label {
+    margin-bottom: 20px;
+  }
+
+  img {
+    height: 220px;
+    width: 240px;
+    margin-top: 15px;
   }
 }

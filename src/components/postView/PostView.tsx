@@ -1,3 +1,5 @@
+import { RawDraftContentState, convertToRaw } from "draft-js";
+import draftToHtml from "draftjs-to-html";
 import { FC } from "react";
 import IPicture from "../../shared/models/IPicture";
 import IPost from "../../shared/models/IPost";
@@ -39,6 +41,15 @@ const PostView: FC<PostViewProps> = (props) => {
     return null;
   };
 
+  const convertFromJSONToHTML = (text: RawDraftContentState) => {
+    try {
+      return { __html: draftToHtml(text) };
+    } catch (exp) {
+      console.log(exp);
+      return { __html: "Error" };
+    }
+  };
+
   return (
     <div className="post-view">
       {/* Post title */}
@@ -50,7 +61,11 @@ const PostView: FC<PostViewProps> = (props) => {
         <p>
           <strong>{user}</strong>
         </p>
-        <p>{getFormattedDate(dateCreated)}</p>
+        <p>
+          {dateCreated
+            ? getFormattedDate(dateCreated)
+            : getFormattedDate(new Date())}
+        </p>
       </div>
 
       {/* Post categories */}
@@ -114,6 +129,13 @@ const PostView: FC<PostViewProps> = (props) => {
           );
         })}
       </div>
+
+      {/* <div
+        className="post-view"
+        dangerouslySetInnerHTML={convertFromJSONToHTML(
+          convertToRaw(description.getCurrentContent())
+        )}
+      ></div> */}
     </div>
   );
 };

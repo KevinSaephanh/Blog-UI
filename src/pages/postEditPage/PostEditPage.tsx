@@ -7,7 +7,7 @@ const PostEditPage: FC<IPost> = () => {
 
   return (
     <div>
-      <h1>Edit Post</h1>
+      <h1 style={{ margin: "20px 0" }}>Edit Post</h1>
       <PostForm />
     </div>
   );

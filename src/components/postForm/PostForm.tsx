@@ -1,12 +1,17 @@
 import { ChangeEvent, FC, FormEvent, useEffect, useState } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
-import PostSection from "../postSection/PostSection";
 import ISection from "../../shared/models/ISection";
-import "./PostForm.scss";
 import IPost from "../../shared/models/IPost";
 import IPicture from "../../shared/models/IPicture";
 
-const myCategories = ["Reviews", "Software Dev", "Philosophy", "Misc."];
+import { Editor } from "react-draft-wysiwyg";
+import { EditorState, convertToRaw, RawDraftContentState } from "draft-js";
+import { categoryNames } from "../../utils/constants";
+import draftToHtml from "draftjs-to-html";
+import "../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import "./PostForm.scss";
+import PostPreviewModal from "../postPreviewModal/PostPreviewModal";
+
 const username = "Kevin Saephanh";
 const picture =
   "https://res.cloudinary.com/geekysrm/image/upload/v1542221619/default-user.png";
@@ -19,20 +24,20 @@ interface PostFormProps {
 const PostForm: FC<PostFormProps> = (props) => {
   const [title, setTitle] = useState<string>("");
   const [categories, setCategories] = useState<string[]>([]);
-  const [thumbnail, setThumbnail] = useState<IPicture>();
-  const [sections, setSections] = useState<ISection[]>([]);
+  const [description, setDescription] = useState(EditorState.createEmpty());
+  // const [editorState, setEditorState] = useState();
+  const [images, setImages] = useState<{ file: File; localSrc: string }[]>([]);
+  const [modalShow, setModalShow] = useState(false);
 
   useEffect(() => {
     const { post } = props;
     if (post) {
       setCategories(post.categories);
-      setSections(post.sections);
-      setThumbnail(post.thumbnail);
     }
   });
 
   const getCategories = () => {
-    return myCategories.map((category, key) => {
+    return categoryNames.map((category, key) => {
       return (
         <button
           id={`${category}-button`}
@@ -68,39 +73,52 @@ const PostForm: FC<PostFormProps> = (props) => {
     categoryButton?.classList.toggle("active");
   };
 
-  const handleFileInput = (e: any) => {
-    const file = e.target.files[0];
-    setThumbnail(file);
-  };
-
-  const handleAddSection = (e: FormEvent) => {
-    e.preventDefault();
-    const section: ISection = {
-      title: "",
-      picture: {} as IPicture,
-      body: [],
-    };
-    setSections((sections) => [...sections, section]);
-    console.log(sections.length);
-  };
-
-  const deleteSection = (id: string, sect: ISection) => {
-    // Delete element from sections array
-    setSections(sections.filter((section) => section !== sect));
-
-    // Delete element from html
-    const sectionEl = document.getElementById(id);
-    sectionEl?.remove();
-
-    console.log(sections.length);
-  };
-
   const handleAddPost = (e: FormEvent) => {
     e.preventDefault();
     console.log(title);
     console.log(categories);
-    console.log(thumbnail);
-    console.log(sections);
+    console.log(description);
+
+    // Upload images first, then add post
+  };
+
+  const uploadCallback = (file: File) => {
+    // const formData = new FormData();
+    // formData.append("file", file);
+
+    let uploadedImages = images;
+    const imageObj = { file: file, localSrc: URL.createObjectURL(file) };
+    uploadedImages.push(imageObj);
+    setImages(uploadedImages);
+
+    return new Promise((resolve, reject) => {
+      resolve({ data: { link: imageObj.localSrc } });
+    });
+
+    // return new Promise((resolve, reject) => {
+    //   fetch("http://localhost:8080/api/upload", {
+    //     method: "POST",
+    //     body: formData,
+    //   })
+    //     .then((res) => res.json())
+    //     .then((resData) => {
+    //       console.log(resData);
+    //       resolve({ data: { link: resData } });
+    //     })
+    //     .catch((error) => {
+    //       console.log(error);
+    //       reject(error.toString());
+    //     });
+    // });
+  };
+
+  const convertFromJSONToHTML = (text: RawDraftContentState) => {
+    try {
+      return { __html: draftToHtml(text) };
+    } catch (exp) {
+      console.log(exp);
+      return { __html: "Error" };
+    }
   };
 
   return (
@@ -117,45 +135,51 @@ const PostForm: FC<PostFormProps> = (props) => {
           />
         </Col>
       </Form.Group>
+
       <Form.Group className="row-group categories" as={Row}>
         <Form.Label column sm="2">
           Categories
         </Form.Label>
         <Col sm="10">{getCategories()}</Col>
       </Form.Group>
-      <Form.Group className="image-form-group">
-        <div>
-          <Form.Label>Upload a thumbnail for your post</Form.Label>
-          <Form.File onChange={handleFileInput} />
-        </div>
-        {thumbnail?.pic ? (
-          <img
-            src={
-              thumbnail.pic instanceof File
-                ? URL.createObjectURL(thumbnail.pic)
-                : thumbnail.pic
-            }
+
+      <Form.Group className="row-group" as={Row}>
+        <Form.Label column sm="2">
+          Description
+        </Form.Label>
+        <Col sm="10">
+          <Form.Control
+            as="textarea"
+            rows={3}
+            placeholder="Give a short description for this post"
+            name="description"
+            // onChange={handleTitleChange}
           />
-        ) : null}
+        </Col>
       </Form.Group>
 
-      <Button variant="success" onClick={(e) => handleAddSection(e)}>
-        Add Section
-      </Button>
-      {sections.length > 0
-        ? sections.map((section, key) => {
-            return (
-              <PostSection
-                deleteSection={deleteSection}
-                section={section}
-                keyId={key}
-              />
-            );
-          })
-        : null}
+      <Editor
+        editorState={description}
+        wrapperClassName="wrapper-class"
+        editorClassName="editor-class"
+        toolbarClassName="toolbar-class"
+        wrapperStyle={{ border: "2px solid green", marginBottom: "20px" }}
+        editorStyle={{
+          height: "90%",
+          minHeight: "350px",
+          maxHeight: "450px",
+          padding: "10px",
+        }}
+        toolbar={{ image: { uploadCallback } }}
+        onEditorStateChange={(editorState: EditorState) =>
+          setDescription(editorState)
+        }
+      />
 
       <div className="button-group">
-        <Button variant="success">Preview</Button>
+        <Button variant="success" onClick={() => setModalShow(true)}>
+          Preview
+        </Button>
         <Button
           variant="success"
           type="submit"
@@ -164,6 +188,15 @@ const PostForm: FC<PostFormProps> = (props) => {
           Submit
         </Button>
       </div>
+
+      <div
+        className="blog-post"
+        dangerouslySetInnerHTML={convertFromJSONToHTML(
+          convertToRaw(description.getCurrentContent())
+        )}
+      ></div>
+
+      <PostPreviewModal show={modalShow} onHide={() => setModalShow(false)} />
     </Form>
   );
 };

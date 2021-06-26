@@ -13,36 +13,24 @@ label {
   font-weight: bold;
 }
 
-.image-form-group {
-  display: flex;
-
-  label {
-    margin-bottom: 20px;
-  }
-
-  img {
-    height: 220px;
-    width: 240px;
-    margin-top: 15px;
-  }
-}
-
 .form-group {
   margin: 25px 0;
 }
 
 .row-group {
-  margin: 15px 0;
+  margin: 25px 0;
 
   label {
     width: 15%;
     text-align: left;
     font-size: 18px;
+    margin-right: 10px;
   }
 
-  input {
-    width: 80%;
-    max-width: 500px;
+  input,
+  textarea {
+    width: 100%;
+    max-width: 650px;
   }
 }
 
@@ -56,9 +44,25 @@ label {
   }
 }
 
+.modal-header {
+  padding: 5px !important;
+
+  button {
+    margin-right: 0;
+    margin-left: auto;
+    color: global.$success-color;
+    font-size: 1.5rem;
+    background-color: transparent;
+    border: none;
+  }
+}
+
 @media only screen and (max-width: 800px) {
   .row-group {
-    input {
+    margin: 15px 0;
+
+    input,
+    textarea {
       width: 100%;
     }
   }

@@ -1,3 +1,5 @@
+export const categoryNames = ["Reviews", "Software Dev", "Philosophy", "Misc."];
+
 export const monthNames = [
   "January",
   "February",

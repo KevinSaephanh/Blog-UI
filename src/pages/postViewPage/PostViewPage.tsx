@@ -10,10 +10,14 @@ const PostViewPage: FC = () => {
   const { title } = useParams<{ title: string }>();
   let post: IPost;
 
+  useEffect(() => {
+    // get title of post here and retrieve it from api
+    
+  })
+
   return (
     <div>
       <PostView post={mockPost} />
-      {/* Make PostView component for both this page and preview button */}
     </div>
   );
 };

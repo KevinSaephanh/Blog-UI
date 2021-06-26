@@ -14,15 +14,22 @@ const PostListPage: FC = () => {
 
   useEffect(() => {
     if (posts.length < 1) {
-      setPosts([mockPost]);
+      setPosts(getSortedPosts());
       console.log(posts);
       // getPosts(dispatch);
     }
   }, []);
 
   const getSortedPosts = (): IPost[] => {
-    const temp = [...posts];
-    return [mockPost];
+    const temp = [mockPost, mockPost, mockPost]; //[...posts];
+    temp.sort((a, b) => {
+      return a.dateCreated.getTime() - b.dateCreated.getTime();
+    });
+    return temp;
+  };
+
+  const navigateToViewPostPage = (post: IPost) => {
+    window.location.href = `/post/${post.title}`;
   };
 
   return (
@@ -31,7 +38,7 @@ const PostListPage: FC = () => {
       <ul className="post-list">
         {posts
           ? posts.map((post, key) => (
-              <Card>
+              <Card key={key} onClick={() => navigateToViewPostPage(post)}>
                 <Card.Body>
                   <Row>
                     <Col>
