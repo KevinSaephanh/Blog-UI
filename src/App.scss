@@ -13,6 +13,10 @@ label {
   font-weight: bold;
 }
 
+.modal-body {
+  padding: 0 !important;
+}
+
 .form-group {
   margin: 25px 0;
 }
@@ -74,5 +78,9 @@ label {
       height: 180px;
       width: 210px;
     }
+  }
+
+  .modal-body {
+    padding: 1em !important;
   }
 }

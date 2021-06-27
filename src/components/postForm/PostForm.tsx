@@ -1,83 +1,60 @@
 import { ChangeEvent, FC, FormEvent, useEffect, useState } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
-import ISection from "../../shared/models/ISection";
+import PostPreviewModal from "../postPreviewModal/PostPreviewModal";
 import IPost from "../../shared/models/IPost";
-import IPicture from "../../shared/models/IPicture";
+import { categoryNames } from "../../utils/constants";
 
 import { Editor } from "react-draft-wysiwyg";
-import { EditorState, convertToRaw, RawDraftContentState } from "draft-js";
-import { categoryNames } from "../../utils/constants";
-import draftToHtml from "draftjs-to-html";
+import { EditorState } from "draft-js";
 import "../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import "./PostForm.scss";
-import PostPreviewModal from "../postPreviewModal/PostPreviewModal";
-
-const username = "Kevin Saephanh";
-const picture =
-  "https://res.cloudinary.com/geekysrm/image/upload/v1542221619/default-user.png";
-const dateCreated = "December 1, 2021";
+import { mockUser } from "../../utils/mocks";
 
 interface PostFormProps {
-  post?: IPost;
+  post?: IPost | null;
 }
 
 const PostForm: FC<PostFormProps> = (props) => {
-  const [title, setTitle] = useState<string>("");
-  const [categories, setCategories] = useState<string[]>([]);
-  const [description, setDescription] = useState(EditorState.createEmpty());
-  // const [editorState, setEditorState] = useState();
+  const [post, setPost] = useState<IPost>({
+    title: "",
+    thumbnail: "",
+    desc: "",
+    dateCreated: new Date(),
+    categories: [],
+    creator: mockUser.username, // Change to auth username
+    creatorProfilePic: mockUser.profilePic, // Change to auth profile pic
+    body: EditorState.createEmpty(),
+  });
   const [images, setImages] = useState<{ file: File; localSrc: string }[]>([]);
   const [modalShow, setModalShow] = useState(false);
 
   useEffect(() => {
-    const { post } = props;
-    if (post) {
-      setCategories(post.categories);
-    }
+    if (props.post) setPost(props.post);
   });
 
-  const getCategories = () => {
-    return categoryNames.map((category, key) => {
-      return (
-        <button
-          id={`${category}-button`}
-          className="category-button"
-          key={key}
-          onClick={(e) => handleCategoryClick(e, category)}
-        >
-          {category}
-        </button>
-      );
-    });
-  };
-
-  const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-    setTitle(value);
+  const handlePostInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setPost({ ...post, [name]: value });
   };
 
   const handleCategoryClick = (e: FormEvent, category: string) => {
     e.preventDefault();
+    const { categories } = post;
+    const temp = categories;
 
     // If array includes category, remove it
     // Else push it to the array
-    if (categories.includes(category)) {
-      setCategories((categories) => categories.filter((c) => c === category));
-    } else {
-      setCategories((categories) => [...categories, category]);
-    }
+    if (categories.includes(category)) temp.splice(temp.indexOf(category), 1);
+    else temp.push(category);
+    setPost({ ...post, categories: temp });
 
-    console.log(categories);
-
+    // Toggle style of category button
     const categoryButton = document.getElementById(`${category}-button`);
     categoryButton?.classList.toggle("active");
   };
 
   const handleAddPost = (e: FormEvent) => {
     e.preventDefault();
-    console.log(title);
-    console.log(categories);
-    console.log(description);
 
     // Upload images first, then add post
   };
@@ -112,15 +89,6 @@ const PostForm: FC<PostFormProps> = (props) => {
     // });
   };
 
-  const convertFromJSONToHTML = (text: RawDraftContentState) => {
-    try {
-      return { __html: draftToHtml(text) };
-    } catch (exp) {
-      console.log(exp);
-      return { __html: "Error" };
-    }
-  };
-
   return (
     <Form className="blog-form">
       <Form.Group className="row-group" as={Row}>
@@ -131,7 +99,7 @@ const PostForm: FC<PostFormProps> = (props) => {
           <Form.Control
             placeholder="Enter title"
             name="title"
-            onChange={handleTitleChange}
+            onChange={handlePostInputChange}
           />
         </Col>
       </Form.Group>
@@ -140,7 +108,18 @@ const PostForm: FC<PostFormProps> = (props) => {
         <Form.Label column sm="2">
           Categories
         </Form.Label>
-        <Col sm="10">{getCategories()}</Col>
+        <Col sm="10">
+          {categoryNames.map((category, key) => (
+            <button
+              id={`${category}-button`}
+              className="category-button"
+              key={key}
+              onClick={(e) => handleCategoryClick(e, category)}
+            >
+              {category}
+            </button>
+          ))}
+        </Col>
       </Form.Group>
 
       <Form.Group className="row-group" as={Row}>
@@ -152,14 +131,14 @@ const PostForm: FC<PostFormProps> = (props) => {
             as="textarea"
             rows={3}
             placeholder="Give a short description for this post"
-            name="description"
-            // onChange={handleTitleChange}
+            name="desc"
+            onChange={handlePostInputChange}
           />
         </Col>
       </Form.Group>
 
       <Editor
-        editorState={description}
+        editorState={post.body}
         wrapperClassName="wrapper-class"
         editorClassName="editor-class"
         toolbarClassName="toolbar-class"
@@ -172,7 +151,7 @@ const PostForm: FC<PostFormProps> = (props) => {
         }}
         toolbar={{ image: { uploadCallback } }}
         onEditorStateChange={(editorState: EditorState) =>
-          setDescription(editorState)
+          setPost({ ...post, body: editorState })
         }
       />
 
@@ -189,14 +168,11 @@ const PostForm: FC<PostFormProps> = (props) => {
         </Button>
       </div>
 
-      <div
-        className="blog-post"
-        dangerouslySetInnerHTML={convertFromJSONToHTML(
-          convertToRaw(description.getCurrentContent())
-        )}
-      ></div>
-
-      <PostPreviewModal show={modalShow} onHide={() => setModalShow(false)} />
+      <PostPreviewModal
+        post={post}
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+      />
     </Form>
   );
 };

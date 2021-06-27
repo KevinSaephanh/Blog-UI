@@ -21,6 +21,11 @@ export const PostReducer = (state: IPostState, action: any): any => {
         ...state,
         posts: [...action.payload],
       };
+    case PostActions.SET_CURRENT_POST:
+      return {
+        ...state,
+        post: action.payload,
+      };
     case PostActions.GET_POSTS_FAILURE:
       return {
         ...state,

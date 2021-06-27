@@ -3,7 +3,6 @@ import { Card, Col, Row } from "react-bootstrap";
 import IPost from "../../shared/models/IPost";
 import { getPosts } from "../../store/actions/post/postActions";
 import { PostContext } from "../../store/providers/PostProvider";
-import { mockPost } from "../../utils/mocks";
 import { getFormattedDate } from "../../utils/utils";
 import "./PostListPage.scss";
 
@@ -14,19 +13,19 @@ const PostListPage: FC = () => {
 
   useEffect(() => {
     if (posts.length < 1) {
-      setPosts(getSortedPosts());
+      // setPosts(getSortedPosts());
       console.log(posts);
       // getPosts(dispatch);
     }
   }, []);
 
-  const getSortedPosts = (): IPost[] => {
-    const temp = [mockPost, mockPost, mockPost]; //[...posts];
-    temp.sort((a, b) => {
-      return a.dateCreated.getTime() - b.dateCreated.getTime();
-    });
-    return temp;
-  };
+  // const getSortedPosts = (): IPost[] => {
+  //   const temp = [mockPost, mockPost, mockPost]; //[...posts];
+  //   temp.sort((a, b) => {
+  //     return a.dateCreated.getTime() - b.dateCreated.getTime();
+  //   });
+  //   return temp;
+  // };
 
   const navigateToViewPostPage = (post: IPost) => {
     window.location.href = `/post/${post.title}`;
@@ -47,7 +46,7 @@ const PostListPage: FC = () => {
                         <Card.Text>{post.desc}</Card.Text>
                       </div>
                       <div className="card-bottom">
-                        <span>{post.user}</span>
+                        <span>{post.creator}</span>
                         <span>{getFormattedDate(post.dateCreated)}</span>
                         <ul>
                           {post.categories.map((category, key) => (
@@ -57,10 +56,7 @@ const PostListPage: FC = () => {
                       </div>
                     </Col>
                     <Col>
-                      <Card.Img
-                        variant="top"
-                        src={post.thumbnail.pic as string}
-                      />
+                      <Card.Img variant="top" src={post.thumbnail} />
                     </Col>
                   </Row>
                 </Card.Body>

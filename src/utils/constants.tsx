@@ -1,4 +1,10 @@
-export const categoryNames = ["Reviews", "Software Dev", "Philosophy", "Misc."];
+export const categoryNames = [
+  "Reviews",
+  "Philosophy",
+  "Technology",
+  "Programming",
+  "Misc.",
+];
 
 export const monthNames = [
   "January",

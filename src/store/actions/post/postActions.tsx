@@ -52,6 +52,8 @@ export const uploadImage = async (
   dispatch: Dispatch<any>
 ) => {
   try {
+    const { data } = await axios.post(UPLOAD_URL, { formData });
+    // dispatch
   } catch (error) {
     console.log(error);
     dispatch({ type: PostActions.UPDATE_POST_FAILURE });

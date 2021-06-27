@@ -1,14 +1,13 @@
-import IPicture from "./IPicture";
-import ISection from "./ISection";
+import { EditorState } from "draft-js";
 
 export default interface IPost {
   id?: string;
   title: string;
+  thumbnail: string;
   desc: string;
   categories: string[];
-  user: string;
-  userProfilePic: string;
+  creator: string;
+  creatorProfilePic: string;
   dateCreated: Date;
-  thumbnail: IPicture;
-  sections: ISection[];
+  body: EditorState;
 }

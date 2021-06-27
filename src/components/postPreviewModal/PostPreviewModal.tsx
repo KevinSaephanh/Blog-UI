@@ -1,14 +1,20 @@
 import { FC, useState } from "react";
 import { Modal } from "react-bootstrap";
-import { mockPost } from "../../utils/mocks";
+import IPost from "../../shared/models/IPost";
 import PostView from "../postView/PostView";
 
-const PostPreviewModal: FC<any> = (props) => {
+interface PostPreviewModalProps {
+  post: IPost;
+  show: boolean;
+  onHide(): void;
+}
+
+const PostPreviewModal: FC<PostPreviewModalProps> = (props) => {
   return (
-    <Modal {...props} centered>
+    <Modal {...props} dialogClassName="fullscreen-modal">
       <Modal.Header closeButton />
       <Modal.Body>
-        <PostView post={mockPost} />
+        <PostView post={props.post} />
       </Modal.Body>
     </Modal>
   );

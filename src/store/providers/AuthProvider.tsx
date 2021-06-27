@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }: any) => {
 
       // Decode token
       const decoded = jwtDecode(token) as IToken;
-      const { userId, username, photo, exp } = decoded;
+      const { userId, username, profilePic, exp } = decoded;
 
       // If token is expired, logout user
       const currDateTime = Date.now() / 1000;
@@ -42,7 +42,7 @@ export const AuthProvider = ({ children }: any) => {
       const payload: IUser = {
         userId,
         username,
-        photo,
+        profilePic,
       };
       dispatch({ type: AuthActions.SET_USER, payload });
     }

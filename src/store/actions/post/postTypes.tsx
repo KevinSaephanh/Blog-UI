@@ -9,6 +9,7 @@ export enum PostActions {
   GET_POST_FAILURE = "GET POST FAILURE",
   UPDATE_POST_SUCCESS = "UPDATE POST SUCCESS",
   UPDATE_POST_FAILURE = "UPDATE POST FAILURE",
+  SET_CURRENT_POST = "SET CURRENT POST",
 }
 
 export interface IAddPostSuccess {
@@ -45,6 +46,11 @@ export interface IUpdatePostFailure {
   readonly type: PostActions.UPDATE_POST_FAILURE;
 }
 
+export interface ISetCurrentPost {
+  readonly type: PostActions.SET_CURRENT_POST;
+  payload: IPost;
+}
+
 export type PostAction =
   | IAddPostSuccess
   | IAddPostFailure
@@ -53,4 +59,5 @@ export type PostAction =
   | IGetPostSucces
   | IGetPostFailure
   | IUpdatePostSucces
-  | IUpdatePostFailure;
+  | IUpdatePostFailure
+  | ISetCurrentPost;
