@@ -1,9 +1,9 @@
 import { FC, useContext, useEffect, useState } from "react";
 import { Card, Col, Row } from "react-bootstrap";
-import IPost from "../../shared/models/IPost";
 import { getPosts } from "../../store/actions/post/postActions";
 import { PostContext } from "../../store/providers/PostProvider";
 import { getFormattedDate } from "../../utils/utils";
+import IPost from "../../shared/models/IPost";
 import "./PostListPage.scss";
 
 const PostListPage: FC = () => {
@@ -12,23 +12,19 @@ const PostListPage: FC = () => {
   const [posts, setPosts] = useState<IPost[]>(state.posts);
 
   useEffect(() => {
-    if (posts.length < 1) {
-      // setPosts(getSortedPosts());
-      console.log(posts);
-      // getPosts(dispatch);
-    }
+    getPosts(dispatch);
+    const sortedPosts = getSortedPosts();
+    setPosts(sortedPosts);
   }, []);
 
-  // const getSortedPosts = (): IPost[] => {
-  //   const temp = [mockPost, mockPost, mockPost]; //[...posts];
-  //   temp.sort((a, b) => {
-  //     return a.dateCreated.getTime() - b.dateCreated.getTime();
-  //   });
-  //   return temp;
-  // };
+  const getSortedPosts = (): IPost[] => {
+    const temp = [...posts];
+    temp.sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime());
+    return temp;
+  };
 
   const navigateToViewPostPage = (post: IPost) => {
-    window.location.href = `/post/${post.title}`;
+    window.location.href = `/post/${post.id}`;
   };
 
   return (
@@ -43,11 +39,11 @@ const PostListPage: FC = () => {
                     <Col>
                       <div className="card-top">
                         <Card.Title>{post.title}</Card.Title>
-                        <Card.Text>{post.desc}</Card.Text>
+                        <Card.Text>{post.description}</Card.Text>
                       </div>
                       <div className="card-bottom">
-                        <span>{post.creator}</span>
-                        <span>{getFormattedDate(post.dateCreated)}</span>
+                        <span>{post.author}</span>
+                        <span>{getFormattedDate(post.createdAt)}</span>
                         <ul>
                           {post.categories.map((category, key) => (
                             <li key={key}>{category}</li>

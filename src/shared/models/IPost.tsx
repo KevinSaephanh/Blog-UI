@@ -4,10 +4,10 @@ export default interface IPost {
   id?: string;
   title: string;
   thumbnail: string;
-  desc: string;
+  description: string;
   categories: string[];
-  creator: string;
-  creatorProfilePic: string;
-  dateCreated: Date;
+  author: string;
+  authorPic: string;
+  createdAt: Date;
   body: EditorState;
 }

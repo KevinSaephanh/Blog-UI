@@ -1,15 +1,20 @@
 import { FC, useContext, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import PostForm from "../../components/postForm/PostForm";
 import IPost from "../../shared/models/IPost";
+import { getPost } from "../../store/actions/post/postActions";
 import { PostContext } from "../../store/providers/PostProvider";
 
 const PostEditPage: FC<IPost> = () => {
   const [post, setPost] = useState<IPost | null>(null);
-  const postContext = useContext(PostContext);
-  const { currentPost } = postContext.state;
+  const { state, dispatch } = useContext(PostContext);
+  const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
-    if (currentPost) setPost(currentPost);
+    if (id) {
+      getPost(id, dispatch);
+      setPost(state.currentPost);
+    }
   });
 
   return (

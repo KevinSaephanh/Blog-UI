@@ -1,4 +1,11 @@
-import { ChangeEvent, FC, FormEvent, useEffect, useState } from "react";
+import {
+  ChangeEvent,
+  FC,
+  FormEvent,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import PostPreviewModal from "../postPreviewModal/PostPreviewModal";
 import IPost from "../../shared/models/IPost";
@@ -9,6 +16,8 @@ import { EditorState } from "draft-js";
 import "../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import "./PostForm.scss";
 import { mockUser } from "../../utils/mocks";
+import { addPost } from "../../store/actions/post/postActions";
+import { PostContext } from "../../store/providers/PostProvider";
 
 interface PostFormProps {
   post?: IPost | null;
@@ -18,15 +27,16 @@ const PostForm: FC<PostFormProps> = (props) => {
   const [post, setPost] = useState<IPost>({
     title: "",
     thumbnail: "",
-    desc: "",
-    dateCreated: new Date(),
+    description: "",
+    createdAt: new Date(),
     categories: [],
-    creator: mockUser.username, // Change to auth username
-    creatorProfilePic: mockUser.profilePic, // Change to auth profile pic
+    author: mockUser.username, // Change to auth username
+    authorPic: mockUser.profilePic, // Change to auth profile pic
     body: EditorState.createEmpty(),
   });
   const [images, setImages] = useState<{ file: File; localSrc: string }[]>([]);
   const [modalShow, setModalShow] = useState(false);
+  const { dispatch } = useContext(PostContext);
 
   useEffect(() => {
     if (props.post) setPost(props.post);
@@ -57,6 +67,8 @@ const PostForm: FC<PostFormProps> = (props) => {
     e.preventDefault();
 
     // Upload images first, then add post
+    console.log(post);
+    addPost(post, dispatch);
   };
 
   const uploadCallback = (file: File) => {
@@ -131,7 +143,7 @@ const PostForm: FC<PostFormProps> = (props) => {
             as="textarea"
             rows={3}
             placeholder="Give a short description for this post"
-            name="desc"
+            name="description"
             onChange={handlePostInputChange}
           />
         </Col>
