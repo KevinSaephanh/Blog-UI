@@ -20,3 +20,9 @@ export const monthNames = [
   "November",
   "December",
 ];
+
+export const config = {
+  headers: {
+    "Content-Type": "application/json",
+  },
+};

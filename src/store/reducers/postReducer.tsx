@@ -14,13 +14,13 @@ export const initialPostState: IPostState = {
 export const PostReducer = (state: IPostState, action: any): any => {
   switch (action.type) {
     case PostActions.ADD_POST_SUCCESS:
-    case PostActions.GET_POST_SUCCESS:
     case PostActions.GET_POSTS_SUCCESS:
     case PostActions.UPDATE_POST_SUCCESS:
       return {
         ...state,
         posts: [...action.payload],
       };
+    case PostActions.GET_POST_SUCCESS:
     case PostActions.SET_CURRENT_POST:
       return {
         ...state,

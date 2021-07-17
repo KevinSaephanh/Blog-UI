@@ -1,13 +1,16 @@
 import { Dispatch } from "react";
 import { PostActions } from "./postTypes";
+import { config } from "../../../utils/constants";
 import IPost from "../../../shared/models/IPost";
 import axios from "axios";
+import * as uuid from "uuid";
 
 const BASE_URL = process.env.REACT_APP_API_URL as string;
 
 export const addPost = async (post: IPost, dispatch: Dispatch<any>) => {
   try {
-    const { data } = await axios.post(BASE_URL, { post });
+    post.id = uuid.v1();
+    const { data } = await axios.post(BASE_URL, { post }, config);
     window.location.href = "/";
     dispatch({ type: PostActions.ADD_POST_SUCCESS, payload: data });
   } catch (error) {
@@ -18,7 +21,7 @@ export const addPost = async (post: IPost, dispatch: Dispatch<any>) => {
 
 export const getPosts = async (dispatch: Dispatch<any>) => {
   try {
-    const { data } = await axios.get(BASE_URL);
+    const { data } = await axios.get(BASE_URL, config);
     dispatch({ type: PostActions.GET_POSTS_SUCCESS, payload: data });
   } catch (error) {
     console.log(error);
@@ -28,7 +31,8 @@ export const getPosts = async (dispatch: Dispatch<any>) => {
 
 export const getPost = async (id: string, dispatch: Dispatch<any>) => {
   try {
-    const { data } = await axios.get(`${BASE_URL}/${id}`);
+    const { data } = await axios.get(`${BASE_URL}/${id}`, config);
+    console.log(data);
     dispatch({ type: PostActions.GET_POST_SUCCESS, payload: data });
   } catch (error) {
     console.log(error);
@@ -38,7 +42,7 @@ export const getPost = async (id: string, dispatch: Dispatch<any>) => {
 
 export const updatePost = async (post: IPost, dispatch: Dispatch<any>) => {
   try {
-    const { data } = await axios.put(BASE_URL, { post });
+    const { data } = await axios.put(BASE_URL, { post }, config);
     dispatch({ type: PostActions.UPDATE_POST_SUCCESS, payload: data });
   } catch (error) {
     console.log(error);

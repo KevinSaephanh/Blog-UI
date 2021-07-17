@@ -31,7 +31,7 @@ const PostView: FC<PostViewProps> = (props) => {
           <p>
             <strong>{author}</strong>
           </p>
-          <p>{getFormattedDate(createdAt)}</p>
+          <p>{getFormattedDate(new Date(createdAt))}</p>
         </div>
         <ul className="post-category-list">
           {categories.map((category, key) => (

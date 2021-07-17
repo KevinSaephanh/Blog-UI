@@ -23,8 +23,6 @@ export const AuthReducer = (state: IAuthState, action: any): any => {
       };
     case AuthActions.LOGIN_FAILURE:
     case AuthActions.LOGOUT:
-      window.location.href = "/login";
-
       return {
         ...state,
         user: null,

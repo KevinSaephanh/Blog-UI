@@ -10,14 +10,13 @@ import { Form, Button, Row, Col } from "react-bootstrap";
 import PostPreviewModal from "../postPreviewModal/PostPreviewModal";
 import IPost from "../../shared/models/IPost";
 import { categoryNames } from "../../utils/constants";
-
+import { mockUser } from "../../utils/mocks";
+import { addPost } from "../../store/actions/post/postActions";
+import { PostContext } from "../../store/providers/PostProvider";
 import { Editor } from "react-draft-wysiwyg";
 import { EditorState } from "draft-js";
 import "../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import "./PostForm.scss";
-import { mockUser } from "../../utils/mocks";
-import { addPost } from "../../store/actions/post/postActions";
-import { PostContext } from "../../store/providers/PostProvider";
 
 interface PostFormProps {
   post?: IPost | null;
@@ -67,7 +66,9 @@ const PostForm: FC<PostFormProps> = (props) => {
     e.preventDefault();
 
     // Upload images first, then add post
-    console.log(post);
+    console.log(images);
+    setPost({ ...post, thumbnail: images[0].file.name });
+    // console.log(post);
     addPost(post, dispatch);
   };
 
