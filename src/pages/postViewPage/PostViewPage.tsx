@@ -8,14 +8,20 @@ import { PostContext } from "../../store/providers/PostProvider";
 const PostViewPage: FC = () => {
   const { id } = useParams<{ id: string }>();
   const { state, dispatch } = useContext(PostContext);
-  const [post, setPost] = useState<IPost | null>(null);
+  const [post, setPost] = useState<IPost>({} as IPost);
 
   useEffect(() => {
-    getPost(id, dispatch);
-    setPost(state.currentPost!);
-  }, [state.currentPost]);
+    if (!post.title) {
+      getPost(id, dispatch);
+      setPost(state.post);
+    }
+  }, [state.post]);
 
-  return <div>{post ? <PostView post={post} /> : null}</div>;
+  return (
+    <div>
+      <PostView post={post} />
+    </div>
+  );
 };
 
 export default PostViewPage;

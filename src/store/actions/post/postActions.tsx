@@ -32,8 +32,7 @@ export const getPosts = async (dispatch: Dispatch<any>) => {
 export const getPost = async (id: string, dispatch: Dispatch<any>) => {
   try {
     const { data } = await axios.get(`${BASE_URL}/${id}`, config);
-    console.log(data);
-    dispatch({ type: PostActions.GET_POST_SUCCESS, payload: data });
+    dispatch({ type: PostActions.GET_POST_SUCCESS, payload: data.Item });
   } catch (error) {
     console.log(error);
     dispatch({ type: PostActions.GET_POST_FAILURE });

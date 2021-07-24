@@ -13,7 +13,7 @@ const PostEditPage: FC<IPost> = () => {
   useEffect(() => {
     if (id) {
       getPost(id, dispatch);
-      setPost(state.currentPost);
+      setPost(state.post);
     }
   });
 

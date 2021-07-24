@@ -30,7 +30,7 @@ function App() {
             <Switch>
               <Route exact path="/" component={PostListPage} />
               <Route exact path="/login" component={LoginPage} />
-              <Route exact path="/post/:title" component={PostViewPage} />
+              <Route exact path="/post/:id" component={PostViewPage} />
               <Route exact path="/post-create" component={PostEditPage} />
               {/* <Route exact path="/post-edit/:id" component={PostEditPage} /> */}
               <GuardedRoute

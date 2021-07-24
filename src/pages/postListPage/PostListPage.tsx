@@ -33,39 +33,35 @@ const PostListPage: FC = () => {
     <div className="post-list-page">
       <h1>Latest Posts</h1>
       <ul className="post-list">
-        {posts
-          ? posts.map((post, key) => (
-              <Card key={key} onClick={() => navigateToViewPostPage(post)}>
-                <Card.Body>
-                  <Row>
-                    {/* Post metadata */}
-                    <Col>
-                      <div className="card-top">
-                        <Card.Title>{post.title}</Card.Title>
-                        <Card.Text>{post.description}</Card.Text>
-                      </div>
-                      <div className="card-bottom">
-                        <span>{post.author}</span>
-                        <span>
-                          {getFormattedDate(new Date(post.createdAt))}
-                        </span>
-                        <ul>
-                          {post.categories.map((category, key) => (
-                            <li key={key}>{category}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    </Col>
+        {posts.map((post, key) => (
+          <Card key={key} onClick={() => navigateToViewPostPage(post)}>
+            <Card.Body>
+              <Row>
+                {/* Post metadata */}
+                <Col>
+                  <div className="card-top">
+                    <Card.Title>{post.title}</Card.Title>
+                    <Card.Text>{post.description}</Card.Text>
+                  </div>
+                  <div className="card-bottom">
+                    <span>{post.author}</span>
+                    <span>{getFormattedDate(new Date(post.createdAt))}</span>
+                    <ul>
+                      {post.categories.map((category, key) => (
+                        <li key={key}>{category}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </Col>
 
-                    {/* Post image */}
-                    <Col>
-                      <Card.Img variant="top" src={post.thumbnail} />
-                    </Col>
-                  </Row>
-                </Card.Body>
-              </Card>
-            ))
-          : null}
+                {/* Post image */}
+                <Col>
+                  <Card.Img variant="top" src={post.thumbnail} />
+                </Col>
+              </Row>
+            </Card.Body>
+          </Card>
+        ))}
       </ul>
     </div>
   );

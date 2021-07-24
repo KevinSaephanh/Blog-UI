@@ -66,7 +66,6 @@ const PostForm: FC<PostFormProps> = (props) => {
     e.preventDefault();
 
     // Upload images first, then add post
-    console.log(images);
     setPost({ ...post, thumbnail: images[0].file.name });
     // console.log(post);
     addPost(post, dispatch);

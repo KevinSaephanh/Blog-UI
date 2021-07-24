@@ -23,31 +23,35 @@ const PostView: FC<PostViewProps> = (props) => {
 
   return (
     <div className="post-view">
-      {/* Header content for post: title, author, etc. */}
-      <div className="post-header">
-        <h1>{title}</h1>
-        <div className="post-metadata-wrapper">
-          <img src={authorPic} />
-          <p>
-            <strong>{author}</strong>
-          </p>
-          <p>{getFormattedDate(new Date(createdAt))}</p>
-        </div>
-        <ul className="post-category-list">
-          {categories.map((category, key) => (
-            <li key={key}>{category}</li>
-          ))}
-        </ul>
-      </div>
+      {title ? (
+        <div>
+          {/* Header content for post: title, author, etc. */}
+          <div className="post-header">
+            <h1>{title}</h1>
+            <div className="post-metadata-wrapper">
+              <img src={authorPic} />
+              <p>
+                <strong>{author}</strong>
+              </p>
+              <p>{getFormattedDate(new Date(createdAt))}</p>
+            </div>
+            <ul className="post-category-list">
+              {categories.map((category, key) => (
+                <li key={key}>{category}</li>
+              ))}
+            </ul>
+          </div>
 
-      {/* Content body for post */}
-      {body ? (
-        <div
-          className="post-body"
-          dangerouslySetInnerHTML={convertFromJSONToHTML(
-            convertToRaw(body.getCurrentContent())
-          )}
-        />
+          {/* Content body for post */}
+          {body ? (
+            <div
+              className="post-body"
+              dangerouslySetInnerHTML={convertFromJSONToHTML(
+                convertToRaw(body.getCurrentContent())
+              )}
+            />
+          ) : null}
+        </div>
       ) : null}
     </div>
   );

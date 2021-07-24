@@ -3,12 +3,12 @@ import { PostActions } from "../actions/post/postTypes";
 
 export interface IPostState {
   posts: IPost[];
-  currentPost: IPost | null;
+  post: IPost;
 }
 
 export const initialPostState: IPostState = {
   posts: [] as IPost[],
-  currentPost: null,
+  post: {} as IPost,
 };
 
 export const PostReducer = (state: IPostState, action: any): any => {
@@ -21,7 +21,7 @@ export const PostReducer = (state: IPostState, action: any): any => {
         posts: [...action.payload],
       };
     case PostActions.GET_POST_SUCCESS:
-    case PostActions.SET_CURRENT_POST:
+    case PostActions.SET_POST:
       return {
         ...state,
         post: action.payload,
@@ -31,8 +31,12 @@ export const PostReducer = (state: IPostState, action: any): any => {
         ...state,
         posts: [],
       };
-    case PostActions.ADD_POST_FAILURE:
     case PostActions.GET_POST_FAILURE:
+      return {
+        ...state,
+        currentPost: null,
+      };
+    case PostActions.ADD_POST_FAILURE:
     case PostActions.UPDATE_POST_FAILURE:
       return { ...state };
     default:
